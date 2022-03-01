@@ -108,7 +108,7 @@
 		}, 600, function(){
 			setTimeout(function(){
 				$("#preloader").css("visibility", "hidden").fadeOut();
-			}, 300);
+			}, 1000);
 		});
 	});
 

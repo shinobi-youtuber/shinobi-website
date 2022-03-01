@@ -1965,6 +1965,7 @@ preloader
 --------------------------------------------- 
 */
 #preloader {
+  position: absolute;
   overflow: hidden;
   background: rgb(247,63,39);
   background: -moz-linear-gradient(130deg, rgba(247,63,39,1) 0%, rgba(123,18,48,1) 48%, rgba(248,66,42,1) 100%);
@@ -1976,7 +1977,7 @@ preloader
   top: 0;
   bottom: 0;
   position: fixed;
-  z-index: 9999;
+  z-index: 99999;
   color: #fff;
 }
 
