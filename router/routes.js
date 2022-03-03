@@ -14,7 +14,7 @@ router.use(express.urlencoded());
 let id
 router.use(session({
   secret: "some secret",
-  cookie: {maxAge: 3000}, //600000
+  cookie: {maxAge: 30000}, //600000
   saveUninitialized: false,
   store: store
 }))
@@ -46,6 +46,25 @@ router.get("/post", (req, res) => {
     res.render("./website/post")
   })
 
+router.get('/posts/:id', function(req , res){
+    res.render('./website/posts/' + req.params.id);
+    console.log(req.params.id)
+  });
+
+  // testes ads
+
+router.get("/teste/ad/banner", (req, res )=> {
+  res.render("./website/teste/banner.ejs")
+})
+router.get("/teste/ad/pop", (req, res )=> {
+  res.render("./website/teste/pop.ejs")
+})
+  router.get("/teste/ad/popunder", (req, res )=> {
+    res.render("./website/teste/popunder.ejs")
+  })
+router.get("/teste/ad/", (req, res )=> {
+  res.render("./website/teste/propeller.ejs")
+})
 
 // dashboard
 router.get("/login", (req, res) => {
@@ -75,7 +94,7 @@ router.get("/dashboard", (req, res)=> {
     res.redirect("/login")    
   }
 })
-router.get("/posts", (req, res)=> {
+router.get("/pub", (req, res)=> {
   // console.log(JSON.parse(store.sessions[id]).authenticated)
   if(typeof(store.sessions[id]) == typeof("string")){
     // dashboard
@@ -86,4 +105,13 @@ router.get("/posts", (req, res)=> {
   }
 })
 
+router.get("/browse", (req, res) => {
+  if(typeof(store.sessions[id]) == typeof("string")){
+    // dashboard
+    res.render("./dashboard/dashboard-browse.ejs")
+    // console.log(`cliente acessado dashboard ${req.ip}`)
+  }else {
+    res.redirect("/login")    
+  }
+})
 module.exports = router

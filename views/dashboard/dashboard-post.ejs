@@ -327,7 +327,7 @@
                                     <form>
                                         <div class="form-group">
                                             <label>Iframe do Video:</label>
-                                            <textarea class="form-control h-150px" rows="6" id="comment" placeholder="Digite Aqui o Iframe do video"></textarea>
+                                            <textarea  class="form-control h-150px video_iframe" rows="6" id="comment" placeholder="Digite Aqui o Iframe do video"></textarea>
                                         </div>
                                     </form>
                                 </div>
@@ -336,10 +336,43 @@
                                     <form>
                                         <div class="form-group">
                                             <label>Paragrafo:</label>
-                                            <textarea class="form-control h-150px" rows="6" id="comment" placeholder="Digite Aqui o Paragrafo"></textarea>
+                                            <textarea class="form-control h-150px paragrafo_content" rows="6" id="comment" placeholder="Digite Aqui o Paragrafo"></textarea>
                                         </div>
                                     </form>
                                 </div>
+                                
+                            </div>
+                            <div class="card-body card-content">
+                                <h5 class="card-title">Imagem</h5>
+                                <p class="text m-b-15 f-s-12 fw-bold">Caso o campo não seja preenchido, não haver imagem nessa seção.</p>
+                                <div class="basic-form">
+                                    <form>
+                                        <div class="form-group">
+                                            <input  type="file" class="form-control-file img-content">
+                                        </div>
+                                    </form>
+                                </div>
+                                <h5 class="card-title">Video</h5>
+                                <p class="text m-b-15 f-s-12">Caso o campo não seja preenchido, não haver imagem nessa seção.</p>
+                                <p class="text m-b-15 f-s-12">Copie o iframe do video que gostaria de adicionar.</p>
+                                <div class="basic-form">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>Iframe do Video:</label>
+                                            <textarea  class="form-control h-150px video_iframe" rows="6" id="comment" placeholder="Digite Aqui o Iframe do video"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <h5 class="card-title">Paragrafo</h5>
+                                <div class="basic-form">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>Paragrafo:</label>
+                                            <textarea class="form-control h-150px paragrafo_content" rows="6" id="comment" placeholder="Digite Aqui o Paragrafo"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                
                                 <button id="btn_plus" class="btn btn-outline-dark" onclick="addconteudo()" type="button"><i class="fa-solid fa-plus"></i></button>
                             </div>
                         </div>
@@ -368,7 +401,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Salvar</h4>
-                                <a href="./posts"><button id="edit" class="btn btn-danger btn-rounded"  type="button">Limpar Tudo</button></a>
+                                <a href="./pub"><button id="edit" class="btn btn-danger btn-rounded"  type="button">Limpar Tudo</button></a>
                                 <button id="save" class="btn btn-success btn-rounded" onclick="save()" type="button">Salvar</button>
                             </div>
                         </div>
@@ -404,17 +437,18 @@
     <!--**********************************
         Scripts
     ***********************************-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+    <script>
+        var socket = io()
+    </script>
     <script src="./assets/plugins/common/common.min.js"></script>
     <script src="./assets/js/dashboard.posts.js"></script>
     <script src="./assets/js/custom.min.js"></script>
     <script src="./assets/js/settings.js"></script>
     <script src="./assets/js/gleek.js"></script>
     <script src="./assets/js/styleSwitcher.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
-    <script>
-        var socket = io()
-    </script>
 
+<!-- data:image/png;base64, -->
 
 </body>
 

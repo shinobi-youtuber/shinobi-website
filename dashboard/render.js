@@ -1,6 +1,4 @@
 // este arquivo precisa ter a capacidade de editar o index.ejs
-let ejs = require('ejs');
-const fs = require("fs")
 
 
 // editar a ordem dos posts 
