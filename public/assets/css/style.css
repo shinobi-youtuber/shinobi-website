@@ -24,6 +24,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 @import url(../plugins/animate/animate.min.css);
 @import url(../plugins/metismenu/css/metisMenu.min.css);
 @import url(../plugins/bootstrap-select/dist/css/bootstrap-select.min.css);
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Rubik&display=swap');
 .gradient-1, .dropdown-mega-menu .ext-link.link-1 a, .morris-hover, .datamaps-hoverover {
   background-image: linear-gradient(230deg, #759bff, #843cf6); }
 
@@ -55,6 +56,13 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important; }
 
+.tag{
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    display: block;
+    padding: 6px 25px 6px 25px;
+    border-radius: 20px;
+}
 /*!
  * Bootstrap v4.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors

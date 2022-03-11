@@ -48,7 +48,7 @@ router.get("/post", (req, res) => {
 
 router.get('/posts/:id', function(req , res){
     res.render('./website/posts/' + req.params.id);
-    console.log(req.params.id)
+    // console.log(req.params.id)
   });
 
   // testes ads

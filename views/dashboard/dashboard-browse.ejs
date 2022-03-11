@@ -269,12 +269,13 @@
             <!-- row -->
 
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-6">
+                <div id="row" class="row">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title">
                                     <h4>Table Basic</h4>
+                                    <button id="" class="btn btn-outline-dark" onclick="recarregar()"  type="button"> <i class="fa-solid fa-rotate-left"></i>  </button>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table">
@@ -288,30 +289,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <td><a href="#/">Kolor Tea Shirt For Man</a></td>
-                                                <td><span class="badge badge-primary px-2">Sale</span>
-                                                </td>
-                                                <td>January 22</td>
-                                                <td class="color-primary">$21.56</td>
-                                            </tr>
-                                            <tr>
-                                                <th>2</th>
-                                                <td>Kolor Tea Shirt For Women</td>
-                                                <td><span class="badge badge-danger px-2">Tax</span>
-                                                </td>
-                                                <td>January 30</td>
-                                                <td class="color-success">$55.32</td>
-                                            </tr>
-                                            <tr>
-                                                <th>3</th>
-                                                <td>Blue Backpack For Baby</td>
-                                                <td><span class="badge badge-success px-2">Extended</span>
-                                                </td>
-                                                <td>January 25</td>
-                                                <td class="color-danger">$14.85</td>
-                                            </tr>
+                                            <h1 id="carregando" style="font-size: 104px;"><strong>Carregando</strong> </h1>
                                         </tbody>
                                     </table>
                                 </div>
@@ -346,6 +324,7 @@
     <!--**********************************
         Scripts
         ***********************************-->
+        <script type="text/javascript"src="./assets/js/dashboard/htmlpub.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
         <script>
             var socket = io()
