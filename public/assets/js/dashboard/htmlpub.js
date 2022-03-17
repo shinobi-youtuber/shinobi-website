@@ -234,11 +234,32 @@ let postfixed = {
 let content = [
     {"img": "", "video": "", "paragrafo": ""},
 ]
+let base64String = "";
+  
+function imageUploaded() {
+    var file = document.querySelector('#img_banner')['files'][0];
+  
+    var reader = new FileReader();
+      
+    reader.onload = function () {
+        base64String = reader.result.replace("data:", "")
+            .replace(/^.+,/, "");
+  
+        imageBase64Stringsep = base64String;
+  
+        // alert(imageBase64Stringsep);
+        console.log(base64String);
+        postfixed.img_banner = base64String
+    }
+    reader.readAsDataURL(file);
+}
+
 
 function save(nome_pagina) {  
     console.log(nome_pagina)
     postfixed.titulo = document.querySelector("#titulo").value
     postfixed.post_desc = document.querySelector("#descrição").value
+
     // tag
     postfixed.tag.tag = document.querySelector("#tag").value
     postfixed.tag.cor = document.querySelector("#tag_cor").value
@@ -289,3 +310,6 @@ function save(nome_pagina) {
 
     }, 1000)
 }
+
+
+

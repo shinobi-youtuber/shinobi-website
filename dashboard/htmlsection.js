@@ -50,6 +50,35 @@ let sectionhtml = `
 
 <!-- ***** Section end ***** -->
 ` 
+let block_post = `
+
+<!-- ***** block post -  Start ***** -->
+
+<div id="" class="" data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+    <div  class="block-post size-normal">
+        <div class="img">
+            <i><img src="assets/images/far-cry-6.jpeg" alt=""></i>
+        </div>
+        <div class="text">
+            <h1 id="titulo" > FARCRY 6</h1>
+            <div id="tag">
+                    <i class="tag tag-1">Game</i>
+            </div>
+            <p id="descrição">
+               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam ducimus, similique
+               temporibus molestias tempora illum quis, eius autem dicta non reiciendis tenetur veniam quo maxime.
+               Numquam eos saepe nostrum nihil?
+            </p>
+            
+            <a class="botao_href" href=""><button class="butão gradiente-3">BAIXE</button></a>
+            
+        </div>
+    </div> -->
+</div>
+
+<!-- ***** block post -  end ***** -->
 
 
-module.exports = sectionhtml
+`
+
+module.exports = {sectionhtml, block_post}

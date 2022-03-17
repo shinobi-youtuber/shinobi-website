@@ -14,7 +14,7 @@ const store = new session.MemoryStore();
 const fs = require('fs');
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-const sectionhtml = require("./dashboard/htmlsection");
+const {sectionhtml, block_post} = require("./dashboard/htmlsection");
 const { param, post } = require('./router/routes');
 
 
@@ -351,7 +351,7 @@ io.on("connect", (socket) => {
               if (err) throw err;
 
               console.log(`The file was succesfully saved! ${filepath}`);
-              // socket.emit("link_pagina_criada", `/posts/${titulo_da_pagina}` )
+              socket.emit("link_pagina_criada_editar", `/posts/${nome_pagina}` )
               // console.info(process.env.PATH)
           }); 
         // writefile end
@@ -366,11 +366,470 @@ io.on("connect", (socket) => {
     // editar end
 
 
+    // layout principal start
+    socket.on("layout", (download_links_var) => {
+      console.log(download_links_var)
+      // ler arquivos
+      
+      // fs.readFile('./dashboard/layout.json', 'utf8', function (err,data) {
+      //   if (err) {
+      //     return console.log(err);
+      //   }
+      //   console.log(data);
+
+      //   const layout = JSON.parse(data)
+
+      //   //print all database
+      //   layout.forEach(element => {
+      //     console.log(element)
+      //   }); 
+      // });
+
+
+    // escrever arquivos 
+    
+    // let data = ``
+    // fs.writeFile('./dashboard/layout.json', data , "utf-8", (err) =>{
+    //   if(err){console.log(err)}else{
+    //     console.log("arquivo escrito com sucesso ")
+    //   }    
+    // })
+      redefine_index()
+      let block_card = []
+    async function redefine_index() {
+           // extrair ids do json
+     fs.readFile('./dashboard/layout.json', 'utf8', function (err,data) {
+      if (err) {
+        return console.log(err);
+      }
+      const layout = JSON.parse(data)
+
+      //print all database
+      for (let i = 0; i < layout.length; i++) {
+        const element = layout[i];
+        const a = Object.values(element)
+        // console.log(a[0]) //array
+
+        switch (i) {
+          case 0:
+            console.log(i)
+            let block_card_primeira = [[], ""]
+
+
+            for (let index = 0; index < a[0].length; index++) {
+              const element = a[0][index];
+              
+              // EXTRAIR DADOS , BANNER , TAG e ETC DAS paginas 
+               JSDOM.fromFile(`./views/website/posts/${element}`, { runScripts: "dangerously" }).then(dom => {
+                //criar card 
+                let card = new JSDOM(block_post)
+    
+                card.window.document.querySelector(".img").innerHTML = dom.window.document.querySelector("#img_banner").innerHTML // //style="width: 100%;height: 100%;border-radius: 20px 0 0 20px;"
+                card.window.document.querySelector(".img").children[0].style = "width: 100%;height: 100%;border-radius: 20px 0 0 20px;"
+    
+                card.window.document.querySelector("#titulo").innerHTML = dom.window.document.querySelector("#titulo").innerHTML 
+                
+                card.window.document.querySelector("#descrição").innerHTML = dom.window.document.querySelector("#descrição_do_post").innerHTML,  //descrição  // style="height: 50%;overflow-y: scroll;"
+                card.window.document.querySelector("#descrição").style = "height: 50%;overflow-y: scroll;"
+                
+                card.window.document.querySelector("#tag").innerHTML = dom.window.document.querySelector("#tag").innerHTML //tag
+                card.window.document.querySelector("#tag").style = "margin-top: 0px;margin-bottom: 0px;"
+                card.window.document.querySelector("#tag").children[0].style = "margin-top: 0px;margin-bottom: 0px;"
+
+                card.window.document.querySelector(".botao_href").setAttribute("href",`./posts/${element.replace(".ejs", "")}`)
+                // 
+    
+              
+                block_card_primeira[0].push(card.serialize())
+                block_card_primeira[1] = "primeira_area"
+
+              })
+              //
+              
+      
+    
+            }
+            block_card.push(block_card_primeira)
+
+            setTimeout(() => {
+              // addcard(block_card_primeira[0], block_card_primeira[1])
+            }, 100)
+        
+            break;
+        
+          case 1:
+            console.log(i)
+            let block_card_mais = [[], ""]
+
+
+
+            for (let index = 0; index < a[0].length; index++) {
+              const element = a[0][index];
+              
+              // EXTRAIR DADOS , BANNER , TAG e ETC DAS paginas 
+               JSDOM.fromFile(`./views/website/posts/${element}`, { runScripts: "dangerously" }).then(dom => {
+                //criar card 
+                let card = new JSDOM(block_post)
+    
+                card.window.document.querySelector(".img").innerHTML = dom.window.document.querySelector("#img_banner").innerHTML // //style="width: 100%;height: 100%;border-radius: 20px 0 0 20px;"
+                card.window.document.querySelector(".img").children[0].style = "width: 100%;height: 100%;border-radius: 20px 0 0 20px;"
+    
+                card.window.document.querySelector("#titulo").innerHTML = dom.window.document.querySelector("#titulo").innerHTML 
+                
+                card.window.document.querySelector("#descrição").innerHTML = dom.window.document.querySelector("#descrição_do_post").innerHTML,  //descrição  // style="height: 50%;overflow-y: scroll;"
+                card.window.document.querySelector("#descrição").style = "height: 50%;overflow-y: scroll;"
+                
+                card.window.document.querySelector("#tag").innerHTML = dom.window.document.querySelector("#tag").innerHTML //tag
+                card.window.document.querySelector("#tag").style = "margin-top: 0px;margin-bottom: 0px;"
+                card.window.document.querySelector("#tag").children[0].style = "margin-top: 0px;margin-bottom: 0px;"
+    
+              
+                block_card_mais[0].push(card.serialize())
+                block_card_mais[1] = "mais_baixados"
+
+                // console.log(block_card)
+              })
+              //
+              
+      
+    
+            }
+             
+            block_card.push(block_card_mais)
+
+            setTimeout(() => {
+              // addcard(block_card_mais[0], block_card_mais[1])
+            }, 100)
+        
+            break;
+          case 2:
+            console.log(i)
+
+            let block_card_mods = [[], ""]
+
+            for (let index = 0; index < a[0].length; index++) {
+              const element = a[0][index];
+              
+              // EXTRAIR DADOS , BANNER , TAG e ETC DAS paginas 
+               JSDOM.fromFile(`./views/website/posts/${element}`, { runScripts: "dangerously" }).then(dom => {
+                //criar card 
+                let card = new JSDOM(block_post)
+    
+                card.window.document.querySelector(".img").innerHTML = dom.window.document.querySelector("#img_banner").innerHTML // //style="width: 100%;height: 100%;border-radius: 20px 0 0 20px;"
+                card.window.document.querySelector(".img").children[0].style = "width: 100%;height: 100%;border-radius: 20px 0 0 20px;"
+    
+                card.window.document.querySelector("#titulo").innerHTML = dom.window.document.querySelector("#titulo").innerHTML 
+                
+                card.window.document.querySelector("#descrição").innerHTML = dom.window.document.querySelector("#descrição_do_post").innerHTML,  //descrição  // style="height: 50%;overflow-y: scroll;"
+                card.window.document.querySelector("#descrição").style = "height: 50%;overflow-y: scroll;"
+                
+                card.window.document.querySelector("#tag").innerHTML = dom.window.document.querySelector("#tag").innerHTML //tag
+                card.window.document.querySelector("#tag").style = "margin-top: 0px;margin-bottom: 0px;"
+                card.window.document.querySelector("#tag").children[0].style = "margin-top: 0px;margin-bottom: 0px;"
+    
+              
+                block_card_mods[0].push(card.serialize())
+                block_card_mods[1] = "mods"
+
+                // console.log(block_card)
+              })
+              //
+              
+      
+    
+            }
+
+            block_card.push(block_card_mods)
+
+
+            setTimeout(() => {
+              // addcard(block_card_mods[0], block_card_mods[1])
+            }, 100)
+        
+
+            break;
+          
+          case 3:
+            console.log(i)
+
+            let block_card_aplicativos = [[], ""]
+
+            for (let index = 0; index < a[0].length; index++) {
+              const element = a[0][index];
+              
+              // EXTRAIR DADOS , BANNER , TAG e ETC DAS paginas 
+               JSDOM.fromFile(`./views/website/posts/${element}`, { runScripts: "dangerously" }).then(dom => {
+                //criar card 
+                let card = new JSDOM(block_post)
+    
+                card.window.document.querySelector(".img").innerHTML = dom.window.document.querySelector("#img_banner").innerHTML // //style="width: 100%;height: 100%;border-radius: 20px 0 0 20px;"
+                card.window.document.querySelector(".img").children[0].style = "width: 100%;height: 100%;border-radius: 20px 0 0 20px;"
+    
+                card.window.document.querySelector("#titulo").innerHTML = dom.window.document.querySelector("#titulo").innerHTML 
+                
+                card.window.document.querySelector("#descrição").innerHTML = dom.window.document.querySelector("#descrição_do_post").innerHTML,  //descrição  // style="height: 50%;overflow-y: scroll;"
+                card.window.document.querySelector("#descrição").style = "height: 50%;overflow-y: scroll;"
+                
+                card.window.document.querySelector("#tag").innerHTML = dom.window.document.querySelector("#tag").innerHTML //tag
+                card.window.document.querySelector("#tag").style = "margin-top: 0px;margin-bottom: 0px;"
+                card.window.document.querySelector("#tag").children[0].style = "margin-top: 0px;margin-bottom: 0px;"
+    
+              
+                block_card_aplicativos[0].push(card.serialize())
+                block_card_aplicativos[1] = "aplicativos"
+
+                // console.log(block_card)
+              })
+              //
+              
+      
+    
+            }
+
+            block_card.push(block_card_aplicativos)
+
+            setTimeout(() => {
+              // addcard(block_card_aplicativos[0], block_card_aplicativos[1])
+            }, 100)
+        
+            break;
+          case 4:
+            console.log(i)
+
+            let block_card_links = [[], ""]
+
+            for (let index = 0; index < a[0].length; index++) {
+              const element = a[0][index];
+              
+              // EXTRAIR DADOS , BANNER , TAG e ETC DAS paginas 
+               JSDOM.fromFile(`./views/website/posts/${element}`, { runScripts: "dangerously" }).then(dom => {
+                //criar card 
+                let card = new JSDOM(block_post)
+    
+                card.window.document.querySelector(".img").innerHTML = dom.window.document.querySelector("#img_banner").innerHTML // //style="width: 100%;height: 100%;border-radius: 20px 0 0 20px;"
+                card.window.document.querySelector(".img").children[0].style = "width: 100%;height: 100%;border-radius: 20px 0 0 20px;"
+    
+                card.window.document.querySelector("#titulo").innerHTML = dom.window.document.querySelector("#titulo").innerHTML 
+                
+                card.window.document.querySelector("#descrição").innerHTML = dom.window.document.querySelector("#descrição_do_post").innerHTML,  //descrição  // style="height: 50%;overflow-y: scroll;"
+                card.window.document.querySelector("#descrição").style = "height: 50%;overflow-y: scroll;"
+                
+                card.window.document.querySelector("#tag").innerHTML = dom.window.document.querySelector("#tag").innerHTML //tag
+                card.window.document.querySelector("#tag").style = "margin-top: 0px;margin-bottom: 0px;"
+                card.window.document.querySelector("#tag").children[0].style = "margin-top: 0px;margin-bottom: 0px;"
+    
+              
+                block_card_links[0].push(card.serialize())
+                block_card_links[1] = "links"
+
+                // console.log(block_card)
+              })
+              //
+              
+      
+    
+            }
+
+            setTimeout(() => {
+              // addcard(block_card_links[0], block_card_links[1])
+            }, 100)
+        
+            block_card.push(block_card_links)
+
+            break;
+
+
+          default:
+            console.log("erro no linha 630")
+            break;
+        }
+      }
+    });
+    setTimeout(() => {
+      addcard(block_card, "block_card[1]")
+    }, 100)
+
+    }
+    // adiciona os cards
+    function addcard(array, area) {
+      if(Array.isArray(array)){      
+        let data_index // index.ejs
+         fs.readFile(`./views/website/index_save.ejs`,"utf8",  (err, data) =>{
+
+          if(err) throw err 
+          data_index = data;
+
+          tese()
+          function tese() {
+
+              let index_dom = new JSDOM(data_index)
+
+              console.log(download_links_var)
+
+              // injetar scripts , e links de downloads
+              index_dom.window.document.querySelector("#footer").insertAdjacentHTML("afterend", download_links_var.scripts )
+              index_dom.window.document.querySelector("#ad-mais-baixados").innerHTML = download_links_var.banner_mais_baixados             // banner_mais_baixados: string;
+              index_dom.window.document.querySelector("#ad-mods").innerHTML = download_links_var.banner_mods              // banner_mods: string;
+              index_dom.window.document.querySelector("#ad-aplicativos").innerHTML = download_links_var.banner_aplicativos              // banner_aplicativos: string;
+              index_dom.window.document.querySelector("#ad-links").innerHTML = download_links_var.banner_links           // banner_links: string;
+
+          
+
+
+
+              for (let index = 0; index < array.length; index++) {
+                const element = array[index];
+                // console.log(index + "length do array na função:tem que ser 5 e == "+ array.length)
+                // console.log(index + "length do array na função:tem que ser 2 e == "+ array[index].length)
+                // console.log(index + "length do array na função:tem que ser 3 e == "+ array[index][0].length)
+
+                // console.log(array[index][0][0]) //todo loop for last 0
+                console.log(index)
+
+                switch (index) {
+                  case 0:
+                    // primeira_area
+                    for (let i = 0; i < array[index][0].length; i++) {
+                                      const card = new JSDOM(array[index][0][i]) ;
+                                      index_dom.window.document.querySelector("#welcome").firstElementChild.innerHTML += card.serialize()
+                                    }
+                    break;
+                
+                  case 1:
+                    // mais_baixadas
+                    for (let i = 0; i < array[index][0].length; i++) {
+                      const card = new JSDOM(array[index][0][i]) ;
+                      index_dom.window.document.querySelector("#mais_baixados").innerHTML += card.serialize()
+                    }
+                    break;
+                
+                  case 2:
+                    // mods
+                    for (let i = 0; i < array[index][0].length; i++) {
+                      const card = new JSDOM(array[index][0][i]) ;
+                      index_dom.window.document.querySelector("#mods_1").innerHTML += card.serialize()
+                    }
+                    break;
+                
+                  case 3:
+                    // aplicativos
+                    for (let i = 0; i < array[index][0].length; i++) {
+                      const card = new JSDOM(array[index][0][i]) ;
+                      index_dom.window.document.querySelector("#aplicativos_1").innerHTML += card.serialize()                     
+                    }
+                    break;
+                
+                  case 4:
+                    // links
+                    for (let i = 0; i < array[index][0].length; i++) {
+                      const card = new JSDOM(array[index][0][i]) ;                   
+                      index_dom.window.document.querySelector("#links_1").innerHTML += card.serialize()
+                    }
+                     break;
+                                    
+                  default:
+                   console.log("erro length maior que 5")
+                    break;
+                }
+                
+              }
+
+
+
+                
+                
+                
+                
+                // console.log(index_dom.serialize())
+                fs.writeFile("./views/website/index.ejs", index_dom.serialize(), (err) => {
+                  if(err) console.log(err)
+                  console.log("index salvo")
+                } )
+
+          }
+
+        })
+      }else console.log("parametro não e um array")
+    }
+    })
+    // layout principal end
+
+    // dashboard tela principal start
+    socket.on("dashboard_principal", () =>{
+      console.log("deu load")
+
+      let data_info = []
+      fs.readdir('./views/website/posts', (err, data) => {
+        if (err) throw err;
+        // console.log(data);
+        data.forEach((a) => {
+        JSDOM.fromFile(`./views/website/posts/${a}`).then(post => {
+            let tag = post.window.document.querySelector("#tag").innerHTML
+            let data_de_criação = post.window.document.querySelector("#data").innerHTML 
+            data_info.push({"nome":a , tag, data_de_criação})
+            // console.log(data_info)
+          })
+        })
+        
+      
+      });
+      setTimeout(()=>{
+          socket.emit("dashboard_res", data_info)
+          console.log('enviou')
+      }, 1000)
+      
+
+    })
+
+    socket.on("dashboard_dados", (layout) => {
+      fs.writeFile("./dashboard/layout.json", JSON.stringify(layout) , "utf-8", (err) => {
+        if(err)console.log(err)
+        console.log("layout modificado com sucesso")
+        // setTimeout(() => {
+        //   socket.emit("layout", download_links_var)
+        // }, 1000)
+        socket.emit("dados_res")
+      })
+    })
+    // dashboard tela principal start
+
+    
+
+ 
+
+//     [
+//       {"primeira_area": [
+//           "postfull-75.ejs","postfull-233.ejs","postfull-75.ejs"
+//       ]}, 
+//       {"mais_baixados": [
+//           "postfull-75.ejs","postfull-75.ejs","postfull-75.ejs"
+//       ]},
+//       {"mods": [
+//           "postfull-75.ejs","postfull-75.ejs","postfull-75.ejs"
+//       ]}, 
+//       {"aplicativos": [
+//           "postfull-75.ejs","postfull-75.ejs","postfull-75.ejs"
+//       ]}, 
+//       {"links": [
+//           "postfull-75.ejs","postfull-75.ejs","postfull-75.ejs"
+//       ]}
+// ]
+
+
   socket.on('disconnect', () => {
     console.log('cliente desconectou')
   })
   
 })
+
+function sleep(time) {
+  return new Promise((resolve) => { 
+    setTimeout(resolve, time);
+  });
+}
+
+
+
 
 server.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)

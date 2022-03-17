@@ -269,7 +269,196 @@
             <!-- row -->
 
             <div class="container-fluid">
+                <div class="row">
+                    <!--    -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Área de Bem Vindo</h4>
+                                <div class="basic-form ">
+                                    <form class="formulario">
+                                        <div class="form-row align-items-center">
+                                            <div class="col-auto my-1">
+                                                <label class="mr-sm-2">Preference</label>
+                                                <select class="custom-select mr-sm-2 select_area form_welcome" id="inlineFormCustomSelect">
+                                                    <option selected="selected">Escolha o Posts...</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <button id="btn_plus" class="btn btn-outline-dark" onclick="addconteudo(this, 'form_welcome')" type="button"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <!--    -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Mais Baixados</h4>
+                                <div class="basic-form ">
+                                    <form class="formulario">
+                                        <div class="form-row align-items-center">
+                                            <div class="col-auto my-1">
+                                                <label class="mr-sm-2">Preference</label>
+                                                <select class="custom-select mr-sm-2 select_area form_mais_baixados" id="inlineFormCustomSelect">
+                                                    <option selected="selected">Escolha o Posts...</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <button id="btn_plus" class="btn btn-outline-dark" onclick="addconteudo(this, 'form_mais_baixados')" type="button"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <!--    -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Mods</h4>
+                                <div class="basic-form ">
+                                    <form class="formulario">
+                                        <div class="form-row align-items-center">
+                                            <div class="col-auto my-1">
+                                                <label class="mr-sm-2">Preference</label>
+                                                <select class="custom-select mr-sm-2 select_area form_mods" id="inlineFormCustomSelect">
+                                                    <option selected="selected">Escolha o Posts...</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <button id="btn_plus" class="btn btn-outline-dark" onclick="addconteudo(this, 'form_mods')" type="button"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <!--    -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Aplicativos</h4>
+                                <div class="basic-form ">
+                                    <form class="formulario">
+                                        <div class="form-row align-items-center">
+                                            <div class="col-auto my-1">
+                                                <label class="mr-sm-2">Preference</label>
+                                                <select class="custom-select mr-sm-2 select_area form_aplicativos" id="inlineFormCustomSelect">
+                                                    <option selected="selected">Escolha o Posts...</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <button id="btn_plus" class="btn btn-outline-dark" onclick="addconteudo(this, 'form_aplicativos')" type="button"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <!--    -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Links</h4>
+                                <div class="basic-form ">
+                                    <form class="formulario">
+                                        <div class="form-row align-items-center">
+                                            <div class="col-auto my-1">
+                                                <label class="mr-sm-2">Preference</label>
+                                                <select class="custom-select mr-sm-2 select_area form_links" id="inlineFormCustomSelect">
+                                                    <option selected="selected">Escolha o Posts...</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <button id="btn_plus" class="btn btn-outline-dark" onclick="addconteudo(this, 'form_links')" type="button"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <!--  -->
+                                <h4 class="card-title">Área de Download</h4>
+                                <p class="text m-b-15 f-s-12">Defina aqui os links de download, tipos de anuncio e outros.</p>
+                                <!--  -->
+                                <h5 class="card-title">Scripts</h5>
+                                <p class="text m-b-15 f-s-12"> <strong>IMPORTANTE</strong> coloque apenas os <code> &lt; scripts &gt; </code> </p>
+                                <div class="basic-form">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>Digite os Scripts Copiados:</label>
+                                            <textarea id="scripts" class="form-control h-150px scripts" rows="6" placeholder="Digite Aqui os scripts"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--  -->
+                                   <!--  -->
+                                <h5 class="card-title">Banners</h5>
+                                <p class="text m-b-15 f-s-12">Defina aqui os banners acima e abaixo do botão de download.</p>
+                                <p class="text m-b-15 f-s-12"> <strong>IMPORTANTE</strong> coloque apenas as <code> < div > </code> </p>
+                                <!--  -->
+                                <h6 class="card-title">Banner da Área dos Mais Baixados</h6>
+                                <div class="basic-form">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>Defina aqui o Banner da Área dos Mais Baixados:</label>
+                                            <input id="banner_mais_baixados" type="text" class="form-control input-default" placeholder="Defina aqui os banner acima do butão de download">
+                                        </div>
+                                    </form>
+                                </div>
 
+                                <h6 class="card-title">Banner da Área de Mods</h6>
+                                <div class="basic-form">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>Defina aqui o Banner da Área de Mods</label>
+                                            <input id="banner_mods" type="text" class="form-control input-default" placeholder="Defina aqui o banner acima do butão de download">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--  -->
+                                <h6 class="card-title">Banner da Área de Aplicativos</h6>
+                                <div class="basic-form">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>Defina aqui o Banner da Área de Aplicativos:</label>
+                                            <input id="banner_aplicativos" type="text" class="form-control input-default" placeholder="Defina aqui o banner acima do butão de download">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--  -->
+                                <!--  -->
+                                <h6 class="card-title">Banner da Área de Links</h6>
+                                <div class="basic-form">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>Defina aqui o Banner da Área de Links:</label>
+                                            <input id="banner_links" type="text" class="form-control input-default" placeholder="Defina aqui o banner acima do butão de download">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--  -->       
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Salvar</h4>
+                                            <a href="./dashboard"><button id="edit" class="btn btn-danger btn-rounded" type="button">Limpar Tudo</button></a>
+                                            <button id="save" class="btn btn-success btn-rounded" onclick="extrairdados()" type="button">Salvar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- #/ container -->
         </div>
@@ -297,16 +486,18 @@
     <!--**********************************
         Scripts
     ***********************************-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+    <script>
+        var socket = io()
+    </script>
+    <script src="./assets/js/dashboard.js"></script>
     <script src="./assets/plugins/common/common.min.js"></script>
     <script src="./assets/js/custom.min.js"></script>
     <script src="./assets/js/settings.js"></script>
     <script src="./assets/js/gleek.js"></script>
     <script src="./assets/js/styleSwitcher.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
-    <script>
-        var socket = io()
-    </script>
-
+    
+    
 
 </body>
 
