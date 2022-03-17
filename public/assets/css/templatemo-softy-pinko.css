@@ -396,7 +396,7 @@ header
 --------------------------------------------- 
 */
 .header-area {
-  position: fixed;
+  position: absolute;
   top: 30px;
   left: 0px;
   right: 0px;

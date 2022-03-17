@@ -1,16 +1,13 @@
 window.addEventListener("load", function(){
     //everything is fully loaded, don't use me if you can use DOMContentLoaded
     socket.emit("dashboard_principal")
-    console.log("chegou aqui 1")
 
 });
 socket.on("dashboard_res", (data) => {
-    console.log("chegou aqui")
     rendertable(data)
 })
 
 function rendertable(data) {
-    console.log("renderizou")
     document.querySelectorAll(".select_area").forEach((select)=> {
 
 
@@ -79,34 +76,47 @@ function extrairdados() {
     let form_welcome = document.querySelectorAll(".form_welcome")
     w1.primeira_area = []
     for(let i = 0; i< form_welcome.length; i++){
-  
-        console.log(form_welcome[i].value)
-        w1.primeira_area.push(form_welcome[i].value)
+        if(form_welcome[i].value == "Escolha o Posts..."){
+        }else {  
+            w1.primeira_area.push(form_welcome[i].value)
+        }
+
       }
 
     let form_mais_baixados = document.querySelectorAll(".form_mais_baixados")
     mb.mais_baixados = []
     for(let i = 0; i< form_mais_baixados.length; i++){
+        if(form_mais_baixados[i].value == "Escolha o Posts..." ){
+        }else{
+            mb.mais_baixados.push(form_mais_baixados[i].value)  
+        }
   
-        mb.mais_baixados.push(form_mais_baixados[i].value)  
       }
     let form_mods = document.querySelectorAll(".form_mods");
     mods.mods = []
     for (let i = 0; i < form_mods.length; i++) {
-        
-        mods.mods.push(form_mods[i].value)  
+        if(form_mods[i].value == "Escolha o Posts..."){
+        }else{
+            mods.mods.push(form_mods[i].value)  
+        }
     }
     let form_aplicativos = document.querySelectorAll(".form_aplicativos")
     aplicativos.aplicativos = []
     for (let i = 0; i < form_aplicativos.length; i++) {
-        
-        aplicativos.aplicativos.push(form_aplicativos[i].value) 
+        if(form_aplicativos[i].value == "Escolha o Posts..." ){
+        }else{
+            aplicativos.aplicativos.push(form_aplicativos[i].value) 
+        }
+
     }
     let form_links = document.querySelectorAll(".form_links")
     links.links = []
     for (let i = 0; i < form_links.length; i++) {
         
-        links.links.push(form_links[i].value) 
+        if(form_links[i].value == "Escolha o Posts..." ){
+        }else{
+            links.links.push(form_links[i].value) 
+        }
 
     }
 
@@ -142,12 +152,41 @@ function envia(layout) {
     setTimeout(() => {
         socket.emit("layout", download_links) 
     }, 1000)
-    alert("Salvo com sucesso")
 }
 
 socket.on("dados_res", (a) => {
-    console.log(a)
     console.log(download_links)
     socket.emit("layout", download_links)
+})
+
+
+socket.on("index_salvo",() => {
+    alert("Salvo com sucesso")
+
+    layout = []
+    w1 = {"primeira_area": [
+
+    ]}
+    mb = {"mais_baixados": [
+
+    ]}
+    mods = {"mods": [
+
+    ]}
+    aplicativos = {"aplicativos": [
+
+    ]}
+    links = {"links": [
+        
+    ]}
+
+    download_links = {
+        "scripts": "", 
+        "banner_mais_baixados": "",
+        "banner_mods": "",
+        "banner_aplicativos": "",
+        "banner_links": ""
+    }
+
 })
 {/* <option selected="selected">Escolha o Posts...</option> */}

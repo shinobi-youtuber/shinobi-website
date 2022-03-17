@@ -744,6 +744,7 @@ io.on("connect", (socket) => {
                 fs.writeFile("./views/website/index.ejs", index_dom.serialize(), (err) => {
                   if(err) console.log(err)
                   console.log("index salvo")
+                  socket.emit("index_salvo")
                 } )
 
           }
@@ -792,29 +793,6 @@ io.on("connect", (socket) => {
       })
     })
     // dashboard tela principal start
-
-    
-
- 
-
-//     [
-//       {"primeira_area": [
-//           "postfull-75.ejs","postfull-233.ejs","postfull-75.ejs"
-//       ]}, 
-//       {"mais_baixados": [
-//           "postfull-75.ejs","postfull-75.ejs","postfull-75.ejs"
-//       ]},
-//       {"mods": [
-//           "postfull-75.ejs","postfull-75.ejs","postfull-75.ejs"
-//       ]}, 
-//       {"aplicativos": [
-//           "postfull-75.ejs","postfull-75.ejs","postfull-75.ejs"
-//       ]}, 
-//       {"links": [
-//           "postfull-75.ejs","postfull-75.ejs","postfull-75.ejs"
-//       ]}
-// ]
-
 
   socket.on('disconnect', () => {
     console.log('cliente desconectou')
