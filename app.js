@@ -371,29 +371,6 @@ io.on("connect", (socket) => {
       console.log(download_links_var)
       // ler arquivos
       
-      // fs.readFile('./dashboard/layout.json', 'utf8', function (err,data) {
-      //   if (err) {
-      //     return console.log(err);
-      //   }
-      //   console.log(data);
-
-      //   const layout = JSON.parse(data)
-
-      //   //print all database
-      //   layout.forEach(element => {
-      //     console.log(element)
-      //   }); 
-      // });
-
-
-    // escrever arquivos 
-    
-    // let data = ``
-    // fs.writeFile('./dashboard/layout.json', data , "utf-8", (err) =>{
-    //   if(err){console.log(err)}else{
-    //     console.log("arquivo escrito com sucesso ")
-    //   }    
-    // })
       redefine_index()
       let block_card = []
     async function redefine_index() {

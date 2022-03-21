@@ -136,18 +136,19 @@ body {
   bottom: 0;
   left: 0;
 /* background */
-  background: rgb(83,18,36);
+background-color: white;
+  /* background: rgb(83,18,36);
   background: -moz-linear-gradient(130deg, rgba(83,18,36,1) 0%, rgba(123,18,48,1) 48%, rgba(248,66,42,1) 100%);
   background: -webkit-linear-gradient(130deg, rgba(83,18,36,1) 0%, rgba(123,18,48,1) 48%, rgba(248,66,42,1) 100%);
   background: linear-gradient(130deg, rgba(83,18,36,1) 0%, rgba(123,18,48,1) 48%, rgba(248,66,42,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#531224",endColorstr="#f8422a",GradientType=1); 
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#531224",endColorstr="#f8422a",GradientType=1);  */
 /* blur */
-  background: url(../images/background.jpg) ;
+  /* background: url(../images/background.jpg) ;
   background-position: center; 
   background-repeat: no-repeat;
   background-size: cover;
   filter: blur(3px);
-  -webkit-filter: blur(3px);
+  -webkit-filter: blur(3px); */
 }
 
 .section.colored {
@@ -699,18 +700,18 @@ welcome
   bottom: 0;
   left: 0;
 /* background */
-  background: rgb(83,18,36);
-  background: -moz-linear-gradient(130deg, rgba(83,18,36,1) 0%, rgba(123,18,48,1) 48%, rgba(248,66,42,1) 100%);
+  background: white;
+  /* background: -moz-linear-gradient(130deg, rgba(83,18,36,1) 0%, rgba(123,18,48,1) 48%, rgba(248,66,42,1) 100%);
   background: -webkit-linear-gradient(130deg, rgba(83,18,36,1) 0%, rgba(123,18,48,1) 48%, rgba(248,66,42,1) 100%);
   background: linear-gradient(130deg, rgba(83,18,36,1) 0%, rgba(123,18,48,1) 48%, rgba(248,66,42,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#531224",endColorstr="#f8422a",GradientType=1); 
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#531224",endColorstr="#f8422a",GradientType=1);  */
 /* blur */
-  background: url(../images/background.jpg) ;
+  /* background: url(../images/background.jpg) ;
   background-position: center; 
   background-repeat: no-repeat;
   background-size: cover;
   filter: blur(3px);
-  -webkit-filter: blur(3px);
+  -webkit-filter: blur(3px); */
 }
 .welcome-area::before::after{
   content: '';
