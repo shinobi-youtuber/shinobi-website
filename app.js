@@ -219,19 +219,18 @@ io.on("connect", (socket) => {
         let video = post.window.document.querySelectorAll(".content-video")
         let text =  post.window.document.querySelectorAll(".content-text")
         for (let i = sectionlength; i > 0; i--) {
-
           if(i === 1){  
             let image = ""
             let videos = ""
             let paragrafo = ""
-            if(img[i-1].innerHTML != ""){
-            image = img[i-1].innerHTML
+            if(img.length != 0){
+              if(img[i-1].innerHTML != ""){image = img[i-1].innerHTML}
             }
-            if(video[i-1].innerHTML != ""){
-            videos = video[i-1].innerHTML
+            if(video.length != 0){
+              if(video[i-1].innerHTML != ""){videos = video[i-1].innerHTML}
             }
-            if(text[i-1].innerHTML != ""){
-            paragrafo = text[i-1].innerHTML  
+            if(text.length != 0){
+              if(text[i-1].innerHTML != ""){paragrafo = text[i-1].innerHTML }
             }
             content.push({"img": image, "video": videos, "paragrafo": paragrafo})
           }else{

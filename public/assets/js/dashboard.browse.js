@@ -23,7 +23,7 @@ function rendertable(data) {
             <td>${element.data_de_criação}</td>
             <td class="color-primary">
                 <button id="delete" class="btn btn-danger btn-rounded" onclick="excluir( '${element.nome}' )" type="button">Excluir</button>
-                <button id="editar" class="btn btn-success btn-rounded" onclick="  <!--  editar( '${element.nome}' ) -->" type="button">Editar</button>
+                <button id="editar" class="btn btn-success btn-rounded" onclick=" editar( '${element.nome}' )" type="button">Editar</button>
             </td>
         </tr>
         `
