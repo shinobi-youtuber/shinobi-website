@@ -10,7 +10,7 @@ let htmlpublicação = `
             <div class="basic-form">
                 <form>
                     <div class="form-group">
-                        <input id="titulo" type="text" class="form-control input-default" placeholder="Digite o Titulo">
+                        <input id="titulo" type="text" class="form-control input-default" placeholder="Digite o Titulo" readonly="readonly">
                     </div>
                 </form>
             </div>

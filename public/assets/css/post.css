@@ -31,12 +31,23 @@
     .welcome-area .img{
         max-height: 40vh;
     }
-    .welcome-area .img, .welcome-area .text{
+    .welcome-area .text{
         position: relative;
         width: 80%;
         height: 50%;
         margin: 120px 10%;
+
     }
+    .welcome-area .img{
+        position: relative;
+        width: 80%;
+        height: 50%;
+        margin: 120px 10%;
+        display: flex;
+        justify-content: center;
+        
+    }
+    
     /* img */
     .welcome-area .img img{
         width: 100%;

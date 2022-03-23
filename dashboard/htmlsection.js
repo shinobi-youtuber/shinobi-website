@@ -73,7 +73,7 @@ let block_post = `
             <a class="botao_href" href=""><button class="butão gradiente-3">BAIXE</button></a>
             
         </div>
-    </div> -->
+    </div>
 </div>
 
 <!-- ***** block post -  end ***** -->

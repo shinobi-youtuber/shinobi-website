@@ -191,7 +191,6 @@ io.on("connect", (socket) => {
 
     // editar start
     socket.on("editar", (params) => {
-      console.log(params)
 
       JSDOM.fromFile(`./views/website/posts/${params}`).then( post => {
         let postfixed = {
@@ -238,17 +237,27 @@ io.on("connect", (socket) => {
             let videos = ""
             let paragrafo = ""
 
-            if(video[i-1].innerHTML != ""){
-            videos = video[i-1].innerHTML
+            if(video[i-1] !==  undefined){
+              if(video[i-1].innerHTML != ""){
+                videos = video[i-1].innerHTML
+                }
             }
-            if(text[i-1].innerHTML != ""){
-            paragrafo = text[i-1].innerHTML  
+            if(text[i-1] !==  undefined){
+              if(text[i-1].innerHTML != ""){
+                paragrafo = text[i-1].innerHTML  
+                }
             }
+            if(image != "" || videos != "" || paragrafo != ""){ //verifica  se o objeto esta vazio para nao mandar
+            console("tem coisa")
             content.push({"img": image, "video": videos, "paragrafo": paragrafo})
+            }else{
+              console.log("nao tem nada ")
+            }
 
           }
         }
-          socket.emit("editar_res", postfixed, content, params)
+          console.log(content.reverse())
+          socket.emit("editar_res", postfixed, content.reverse(), params)
 
       })
     })
@@ -259,9 +268,7 @@ io.on("connect", (socket) => {
 
 
       let {postfixed, content} = dados_post
-      console.log(postfixed)
       console.log(nome_pagina)
-      console.log(content)
 
 
       // jsdom start
@@ -311,7 +318,6 @@ io.on("connect", (socket) => {
         }else{
         for (var i = content.length; i > 0; i--) {
 
-          console.log("passou aqui")
 
           var d1 = dom.window.document.querySelector('.welcome-area');
           // EDITAR SECTION START
@@ -406,7 +412,7 @@ io.on("connect", (socket) => {
                 card.window.document.querySelector("#titulo").innerHTML = dom.window.document.querySelector("#titulo").innerHTML 
                 
                 card.window.document.querySelector("#descrição").innerHTML = dom.window.document.querySelector("#descrição_do_post").innerHTML,  //descrição  // style="height: 50%;overflow-y: scroll;"
-                card.window.document.querySelector("#descrição").style = "height: 50%;overflow-y: scroll;"
+                card.window.document.querySelector("#descrição").style = "height: 50px;overflow-y: scroll;"
                 
                 card.window.document.querySelector("#tag").innerHTML = dom.window.document.querySelector("#tag").innerHTML //tag
                 card.window.document.querySelector("#tag").style = "margin-top: 0px;margin-bottom: 0px;"
@@ -459,7 +465,8 @@ io.on("connect", (socket) => {
                 card.window.document.querySelector("#tag").style = "margin-top: 0px;margin-bottom: 0px;"
                 card.window.document.querySelector("#tag").children[0].style = "margin-top: 0px;margin-bottom: 0px;"
     
-              
+                card.window.document.querySelector(".botao_href").setAttribute("href",`./posts/${element.replace(".ejs", "")}`)
+
                 block_card_mais[0].push(card.serialize())
                 block_card_mais[1] = "mais_baixados"
 
@@ -503,6 +510,8 @@ io.on("connect", (socket) => {
                 card.window.document.querySelector("#tag").style = "margin-top: 0px;margin-bottom: 0px;"
                 card.window.document.querySelector("#tag").children[0].style = "margin-top: 0px;margin-bottom: 0px;"
     
+                card.window.document.querySelector(".botao_href").setAttribute("href",`./posts/${element.replace(".ejs", "")}`)
+
               
                 block_card_mods[0].push(card.serialize())
                 block_card_mods[1] = "mods"
@@ -550,6 +559,8 @@ io.on("connect", (socket) => {
                 card.window.document.querySelector("#tag").style = "margin-top: 0px;margin-bottom: 0px;"
                 card.window.document.querySelector("#tag").children[0].style = "margin-top: 0px;margin-bottom: 0px;"
     
+                card.window.document.querySelector(".botao_href").setAttribute("href",`./posts/${element.replace(".ejs", "")}`)
+
               
                 block_card_aplicativos[0].push(card.serialize())
                 block_card_aplicativos[1] = "aplicativos"
@@ -594,7 +605,8 @@ io.on("connect", (socket) => {
                 card.window.document.querySelector("#tag").style = "margin-top: 0px;margin-bottom: 0px;"
                 card.window.document.querySelector("#tag").children[0].style = "margin-top: 0px;margin-bottom: 0px;"
     
-              
+                card.window.document.querySelector(".botao_href").setAttribute("href",`./posts/${element.replace(".ejs", "")}`)
+
                 block_card_links[0].push(card.serialize())
                 block_card_links[1] = "links"
 

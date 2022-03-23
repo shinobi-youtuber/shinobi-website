@@ -69,7 +69,11 @@ let content = [
 ]
 
 function save() {  
-    postfixed.titulo = document.querySelector("#titulo").value
+    postfixed.titulo = document.querySelector("#titulo").value.replace(/[^\w\s]/gi, '_').replaceAll(" ", "-")
+
+
+
+
     postfixed.post_desc = document.querySelector("#descrição").value
     // tag
     postfixed.tag.tag = document.querySelector("#tag").value
