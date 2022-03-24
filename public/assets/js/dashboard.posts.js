@@ -145,3 +145,8 @@ socket.on("link_pagina_criada", (a)=> {
 socket.on("content_vazio", ()=>{
     save()
 })
+
+
+
+
+

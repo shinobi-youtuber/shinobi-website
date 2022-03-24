@@ -16,7 +16,7 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const {sectionhtml, block_post} = require("./dashboard/htmlsection");
 const { param, post } = require('./router/routes');
-
+const AWS = require('aws-sdk');
 
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded());
@@ -795,6 +795,107 @@ function sleep(time) {
 }
 
 
+// AWS
+
+// Set the Region 
+AWS.config.update({region: 'us-west-2'});
+
+// Create S3 service object
+s3 = new AWS.S3({apiVersion: '2006-03-01'});
+
+// list bucket
+function listBuckets() {
+// Call S3 to list the buckets
+s3.listBuckets(function(err, data) {
+  if (err) {
+    console.log("Error", err);
+  } else {
+    console.log("Success", data.Buckets);
+  }
+});
+}
+
+// listBuckets
+function listObjects(bucketName) {
+
+  // Create the parameters for calling listObjects
+  var bucketParams = {
+    Bucket : bucketName,
+  };
+
+  // Call S3 to obtain a list of the objects in the bucket
+  s3.listObjects(bucketParams, function(err, data) {
+    if (err) {
+      console.log("Error", err);
+    } else {
+      console.log("Success", data);
+    }
+  });
+
+}
+
+// createBucket
+function createBucket(nomeBucket) {
+  // Create the parameters for calling createBucket
+      var bucketParams = {
+        Bucket : nomeBucket
+      };
+
+      // call S3 to create the bucket
+      s3.createBucket(bucketParams, function(err, data) {
+        if (err) {
+          console.log("Error", err);
+        } else {
+          console.log("Success", data.Location);
+        }
+      });
+}
+
+// upload
+function uploadfile(bucketName, fileName) {
+          
+        // call S3 to retrieve upload file to specified bucket
+        var uploadParams = {Bucket: bucketName, Key: '', Body: ''};
+        var file = fileName;
+
+        // Configure the file stream and obtain the upload parameters
+        var fileStream = fs.createReadStream(file); // ??
+
+        fileStream.on('error', function(err) {
+          console.log('File Error', err);
+        });
+        uploadParams.Body = fileStream;
+        var path = require('path');
+        // uploadParams.Key = path.basename(file);
+
+        // call S3 to retrieve upload file to specified bucket
+        s3.upload (uploadParams, function (err, data) {
+          if (err) {
+            console.log("Error", err);
+          } if (data) {
+            console.log("Upload Success", data.Location);
+          }
+        });
+}
+
+//delete bucket
+function deleteBucket(bucketName) {
+
+        // Create params for S3.deleteBucket
+      var bucketParams = {
+        Bucket : bucketName,
+      };
+
+      // Call S3 to delete the bucket
+      s3.deleteBucket(bucketParams, function(err, data) {
+        if (err) {
+          console.log("Error", err);
+        } else {
+          console.log("Success", data);
+        }
+      });
+
+}
 
 
 server.listen(port, () => {
