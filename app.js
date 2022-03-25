@@ -17,6 +17,12 @@ const { JSDOM } = jsdom;
 const {sectionhtml, block_post} = require("./dashboard/htmlsection");
 const { param, post } = require('./router/routes');
 const AWS = require('aws-sdk');
+const { resolve } = require('path');
+const { rejects } = require('assert');
+const { stringify } = require('querystring');
+
+process.env.AWS_ACCESS_KEY_ID="AKIA4JV5SG6BE34CY72D"
+process.env.AWS_SECRET_ACCESS_KEY="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"
 
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded());
@@ -38,6 +44,288 @@ app.use("/", siteroutes)
 
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
+
+// AWS
+
+// Set the Region 
+AWS.config.update({region: 'us-west-2'});
+// Create S3 service object
+s3 = new AWS.S3({
+  apiVersion: '2006-03-01',
+  AWS_BUCKET_REGION: "sa-east-1" ,
+})
+// list bucket
+function listBuckets() {
+// Call S3 to list the buckets
+s3.listBuckets(function(err, data) {
+  if (err) {
+    console.log("Error", err);
+  } else {
+    console.log("Success", data.Buckets);
+  }
+});
+}
+// listBuckets
+function listObjects(bucketName) {
+
+  // Create the parameters for calling listObjects
+  var bucketParams = {
+    Bucket : bucketName,
+  };
+
+  // Call S3 to obtain a list of the objects in the bucket
+  s3.listObjects(bucketParams, function(err, data) {
+    if (err) {
+      console.log("Error", err);
+    } else {
+      console.log("Success", data);
+      return data
+    }
+  });
+
+}
+// createBucket
+function createBucket(nomeBucket) {
+  // Create the parameters for calling createBucket
+      var bucketParams = {
+        Bucket : nomeBucket
+      };
+
+      // call S3 to create the bucket
+      s3.createBucket(bucketParams, function(err, data) {
+        if (err) {
+          console.log("Error", err);
+        } else {
+          console.log("Success", data.Location);
+        }
+      });
+}
+// upload
+function uploadfile(bucketName, fileName) {
+          
+        // call S3 to retrieve upload file to specified bucket
+        const uploadParams = {Bucket: bucketName, Key: '', Body: ''};
+        const file = fileName;
+        const key = fileName.replace("./", "")
+
+        // Configure the file stream and obtain the upload parameters
+        var fileStream = fs.createReadStream(file); // ??
+
+        fileStream.on('error', function(err) {
+          console.log('File Error', err);
+        });
+        uploadParams.Key = key
+        uploadParams.Body = fileStream;
+
+        var path = require('path');
+        // uploadParams.Key = path.basename(file);
+
+        // call S3 to retrieve upload file to specified bucket
+        s3.upload (uploadParams, function (err, data) {
+          if (err) {
+            console.log("Error", err);
+          } if (data) {
+            console.log("Upload Success", data.Location);
+          }
+        });
+}
+//delete bucket
+function deleteBucket(bucketName) {
+
+        // Create params for S3.deleteBucket
+      var bucketParams = {
+        Bucket : bucketName,
+      };
+
+      // Call S3 to delete the bucket
+      s3.deleteBucket(bucketParams, function(err, data) {
+        if (err) {
+          console.log("Error", err);
+        } else {
+          console.log("Success", data);
+        }
+      });
+
+}
+// obter objeto
+function getObject(bucketName, filekey) {
+      
+  const bucketParams = {
+    Bucket: bucketName,
+    Key: filekey,
+  };
+s3.getObject(bucketParams, (err, data) => {
+  if(err){
+    console.error(err)
+  }else{
+  console.log(`objeto baixado com sucesso: ${data /*.Body.toString('utf-8')*/ }`)
+  }
+})
+
+
+}
+// delete object
+function deleteObject(bucketName, filekey) {
+  const bucketParams = {
+    Bucket: bucketName,
+    Key: filekey,
+  };
+
+  s3.deleteObject(bucketParams, (err, data) =>{
+    if(err){
+      console.log(err)
+    }else{
+      console.log(`apagado com sucesso`)
+    }
+  })
+}
+
+
+
+// uploadfile("shinobi-youtube", "./views/website/index.ejs")
+// listObjects("shinobi-youtube")
+// getObject("shinobi-youtube", "views/website/posts/Cuphead-Two-Maps-677.ejs")
+// https://shinobi-youtube.s3.sa-east-1.amazonaws.com/input.txt
+
+// deleteObject("shinobi-youtube", "input.txt")
+
+// envia todos os arquivos da pasta posts para s3 - shinobi-youtube
+// nao duplica
+function enviaposts() {
+  fs.readdir("./views/website/posts", (err, data) => {
+    if(err){
+      console.error(err)
+    }else{
+      // console.log(data)
+      data.forEach(a => {
+        const path = (`./views/website/posts/${a}`)
+        uploadfile("shinobi-youtube", path)
+  
+      })
+    }
+  })
+}
+// obtem posts do s3 
+function obtemposts(bucketName) {
+
+  // Create the parameters for calling listObjects
+  var bucketParams = {
+    Bucket : bucketName,
+  };
+
+  // Call S3 to obtain a list of the objects in the bucket
+  s3.listObjects(bucketParams, function(err, data) {
+    if (err) {
+      console.log("Error", err);
+    } else {
+      // console.log("Success", data.Contents);
+
+      // check if directory exists
+      if (fs.existsSync("./views/website/posts")) {
+          fs.readdir("./views/website/posts", (err, files) => {
+            if (err) throw err;
+            for (const file of files) {
+              fs.unlink(`./views/website/posts/${file}`, err => {
+                if (err) throw err;
+                console.log(`${file} apagado`)
+
+              });
+            }
+          });
+      } else {
+        fs.mkdir("./views/website/posts",  (err) => {
+          if (err) {throw err}else{
+            console.log("diretorio criado")
+          }});
+      }
+
+
+      data.Contents.forEach(a => {
+        // console.log(a.Key)
+        const bucketParams = {
+          Bucket: bucketName,
+          Key: a.Key,
+        };
+        s3.getObject(bucketParams, (err, data) => {
+          if(err){
+            console.error(err)
+          }else{
+          // console.log(`objeto baixado com sucesso: ${data.Body.toString('utf-8') /*data.Body */}`)
+          // console.log(`key do objeto ${a.Key}`)
+            fs.writeFile(`./${a.Key}`, data.Body.toString('utf-8'), (err, data) => {
+              if(err){
+                console.log(err)
+              }else{
+                console.log("gravado com sucesso")
+              }
+            })
+              }
+          })
+      })
+    }
+  });
+}
+// obtemposts("shinobi-youtube")
+// enviaindex
+
+
+function enviaindex() {
+  const path = "./views/website/index.ejs"
+  if(fs.existsSync(path)){
+    console.log("index existe")
+    uploadfile("shinobi-youtube-index", path)
+ 
+  }else{
+    console.log("index não  existe")
+  }
+}
+// enviaindex()
+// obtemindex, atualiza index 
+function obtemindex(bucketName) {
+  const path = "./views/website/index.ejs"
+  let Data
+
+  const bucketParams = {
+    Bucket: bucketName,
+    Key: "views/website/index.ejs",
+  };
+
+  if(fs.existsSync(path)){
+    console.log("index existe")
+    fs.unlink(path, (err) =>{
+      if(err) throw err
+    s3.getObject(bucketParams, (err, Data) => {
+      if(err){
+        console.error(err)
+      }else{
+      console.log(`objeto baixado com sucesso:  /*.Body.toString('utf-8')*/ `)   
+      fs.writeFile(path, Data.Body.toString('utf-8'), (err) =>{
+        if(err) console.log(err);
+        console.log("index gravado com sucesso")
+      })
+      }
+    })
+  }) 
+  }else{
+    console.log("index não existe")
+    s3.getObject(bucketParams, (err, Data ) => {
+      if(err){
+        console.error(err)
+      }else{
+      // console.log(`objeto baixado com sucesso: ${ data.Body.toString('utf-8')} `)   
+      fs.writeFile(path, Data.Body.toString('utf-8'), (err) =>{
+        if(err) console.log(err);
+        console.log("index gravado com sucesso")
+      })
+      }
+    })
+  }
+}
+// obtemindex("shinobi-youtube-index")
+
+obtemindex("shinobi-youtube-index")
+obtemposts("shinobi-youtube")
+
 
 // socket 
 io.on("connect", (socket) => {
@@ -139,6 +427,7 @@ io.on("connect", (socket) => {
 
               console.log(`The file was succesfully saved! ${filepath}`);
               socket.emit("link_pagina_criada", `/posts/${titulo_da_pagina}` )
+              enviaposts()
               // console.info(process.env.PATH)
           }); 
         // writefile end
@@ -184,6 +473,7 @@ io.on("connect", (socket) => {
               throw err;
           }
           console.log("File is deleted.");
+          enviaposts()
         });
 
     })
@@ -357,6 +647,7 @@ io.on("connect", (socket) => {
 
               console.log(`The file was succesfully saved! ${filepath}`);
               socket.emit("link_pagina_criada_editar", `/posts/${nome_pagina}` )
+              enviaposts()
               // console.info(process.env.PATH)
           }); 
         // writefile end
@@ -369,7 +660,6 @@ io.on("connect", (socket) => {
 
     })
     // editar end
-
 
     // layout principal start
     socket.on("layout", (download_links_var) => {
@@ -733,6 +1023,7 @@ io.on("connect", (socket) => {
                   if(err) console.log(err)
                   console.log("index salvo")
                   socket.emit("index_salvo")
+                  enviaindex()
                 } )
 
           }
@@ -780,7 +1071,7 @@ io.on("connect", (socket) => {
         socket.emit("dados_res")
       })
     })
-    // dashboard tela principal start
+    // dashboard tela principal end
 
   socket.on('disconnect', () => {
     console.log('cliente desconectou')
@@ -788,114 +1079,19 @@ io.on("connect", (socket) => {
   
 })
 
-function sleep(time) {
-  return new Promise((resolve) => { 
-    setTimeout(resolve, time);
-  });
-}
+setInterval(function(){ 
+	console.log("Oooo Yeaaa!");
+    enviaindex()
+    enviaposts()
 
+}, 60000);//run this thang every 2 seconds
 
-// AWS
+setInterval(function(){ 
+	console.log("Oooo Yeaaa!");
+obtemindex("shinobi-youtube-index")
+obtemposts("shinobi-youtube") 
 
-// Set the Region 
-AWS.config.update({region: 'us-west-2'});
-
-// Create S3 service object
-s3 = new AWS.S3({apiVersion: '2006-03-01'});
-
-// list bucket
-function listBuckets() {
-// Call S3 to list the buckets
-s3.listBuckets(function(err, data) {
-  if (err) {
-    console.log("Error", err);
-  } else {
-    console.log("Success", data.Buckets);
-  }
-});
-}
-
-// listBuckets
-function listObjects(bucketName) {
-
-  // Create the parameters for calling listObjects
-  var bucketParams = {
-    Bucket : bucketName,
-  };
-
-  // Call S3 to obtain a list of the objects in the bucket
-  s3.listObjects(bucketParams, function(err, data) {
-    if (err) {
-      console.log("Error", err);
-    } else {
-      console.log("Success", data);
-    }
-  });
-
-}
-
-// createBucket
-function createBucket(nomeBucket) {
-  // Create the parameters for calling createBucket
-      var bucketParams = {
-        Bucket : nomeBucket
-      };
-
-      // call S3 to create the bucket
-      s3.createBucket(bucketParams, function(err, data) {
-        if (err) {
-          console.log("Error", err);
-        } else {
-          console.log("Success", data.Location);
-        }
-      });
-}
-
-// upload
-function uploadfile(bucketName, fileName) {
-          
-        // call S3 to retrieve upload file to specified bucket
-        var uploadParams = {Bucket: bucketName, Key: '', Body: ''};
-        var file = fileName;
-
-        // Configure the file stream and obtain the upload parameters
-        var fileStream = fs.createReadStream(file); // ??
-
-        fileStream.on('error', function(err) {
-          console.log('File Error', err);
-        });
-        uploadParams.Body = fileStream;
-        var path = require('path');
-        // uploadParams.Key = path.basename(file);
-
-        // call S3 to retrieve upload file to specified bucket
-        s3.upload (uploadParams, function (err, data) {
-          if (err) {
-            console.log("Error", err);
-          } if (data) {
-            console.log("Upload Success", data.Location);
-          }
-        });
-}
-
-//delete bucket
-function deleteBucket(bucketName) {
-
-        // Create params for S3.deleteBucket
-      var bucketParams = {
-        Bucket : bucketName,
-      };
-
-      // Call S3 to delete the bucket
-      s3.deleteBucket(bucketParams, function(err, data) {
-        if (err) {
-          console.log("Error", err);
-        } else {
-          console.log("Success", data);
-        }
-      });
-
-}
+}, 30000);//run this thang every 2 seconds
 
 
 server.listen(port, () => {
